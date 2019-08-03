@@ -1,24 +1,22 @@
-# README
+# Stefin
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## TODO
 
-Things you may want to cover:
-
-* Ruby version
+* Ruby Version
+  - 2.6.3
 
 * System dependencies
+  - Postgresql 11.3
 
 * Configuration
+  - `cd stefin-api`
+  - `bundle install`
 
 * Database creation
+  - `bundle exec rails db:create db:migrate`
 
 * Database initialization
+  - `bundle exec rails db:seed`
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* To run the test suit
+  - `bundle exec rspec`
