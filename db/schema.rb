@@ -10,12 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_03_022845) do
+ActiveRecord::Schema.define(version: 2019_08_03_132955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "unaccent"
+
+  create_table "accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.citext "name", null: false
+    t.bigint "balance_cents", default: 0, null: false
+    t.string "balance_currency", default: "USD", null: false
+    t.string "color", limit: 7, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_accounts_on_name", unique: true
+  end
 
 end
