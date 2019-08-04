@@ -1,0 +1,4 @@
+test:
+  adapter: postgresql
+  database: stefin_ci_test
+  port: 5432

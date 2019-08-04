@@ -35,5 +35,9 @@ Metrics/MethodLength:
 Style/AccessModifierDeclarations:
   EnforcedStyle: inline
 
+Style/AsciiComments:
+  Exclude:
+    - 'config/initializers/money.rb'
+
 Style/FrozenStringLiteralComment:
   Enabled: false

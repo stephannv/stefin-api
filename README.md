@@ -6,7 +6,7 @@
   - 2.6.3
 
 * System dependencies
-  - Postgresql 11.3
+  - Postgresql 11.4
 
 * Configuration
   - `cd stefin-api`
