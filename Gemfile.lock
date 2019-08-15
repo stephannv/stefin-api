@@ -101,7 +101,6 @@ GEM
     ice_nine (0.11.2)
     jaro_winkler (1.5.3)
     json (2.2.0)
-    light-service (0.12.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -132,6 +131,8 @@ GEM
     mustermann (1.0.3)
     mustermann-grape (1.0.0)
       mustermann (~> 1.0.0)
+    mutations (0.9.0)
+      activesupport
     nio4r (2.4.0)
     nokogiri (1.10.3)
       mini_portile2 (~> 2.4.0)
@@ -211,6 +212,8 @@ GEM
     ruby_dep (1.5.0)
     shoulda-matchers (4.1.2)
       activesupport (>= 4.2.0)
+    simple_enum (2.3.2)
+      activesupport (>= 4.0.0)
     simplecov (0.17.0)
       docile (~> 1.1)
       json (>= 1.8, < 3)
@@ -253,9 +256,9 @@ DEPENDENCIES
   faker (= 2.1.0)
   grape (= 1.2.4)
   grape-entity (= 0.7.1)
-  light-service (= 0.12.0)
   listen (= 3.1.5)
   money-rails (= 1.13.2)
+  mutations (= 0.9.0)
   pg (= 1.1.4)
   puma (= 4.0.1)
   rack-cors (= 1.0.3)
@@ -265,6 +268,7 @@ DEPENDENCIES
   rubocop-performance (= 1.4.1)
   rubocop-rails (= 2.2.1)
   shoulda-matchers (= 4.1.2)
+  simple_enum (= 2.3.2)
   simplecov (= 0.17.0)
   spring (= 2.1.0)
   spring-watcher-listen (= 2.0.1)
@@ -274,4 +278,4 @@ RUBY VERSION
    ruby 2.6.3p62
 
 BUNDLED WITH
-   1.17.2
+   1.17.3

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_03_132955) do
+ActiveRecord::Schema.define(version: 2019_08_05_125805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -28,4 +28,20 @@ ActiveRecord::Schema.define(version: 2019_08_03_132955) do
     t.index ["name"], name: "index_accounts_on_name", unique: true
   end
 
+  create_table "records", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "account_id", null: false
+    t.bigint "amount_cents", default: 0, null: false
+    t.string "amount_currency", default: "USD", null: false
+    t.datetime "occurred_at", null: false
+    t.integer "group_modifier", null: false
+    t.string "title", limit: 255
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_records_on_account_id"
+    t.index ["group_modifier"], name: "index_records_on_group_modifier"
+    t.index ["occurred_at"], name: "index_records_on_occurred_at"
+  end
+
+  add_foreign_key "records", "accounts"
 end

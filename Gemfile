@@ -6,12 +6,13 @@ ruby '2.6.3'
 gem 'bootsnap', '1.4.4', require: false
 gem 'grape', '1.2.4'
 gem 'grape-entity', '0.7.1'
-gem 'light-service', '0.12.0'
 gem 'money-rails', '1.13.2'
+gem 'mutations', '0.9.0'
 gem 'pg', '1.1.4'
 gem 'puma', '4.0.1'
 gem 'rack-cors', '1.0.3'
 gem 'rails', '6.0.0.rc2'
+gem 'simple_enum', '2.3.2'
 gem 'tzinfo-data', '1.2.5', platforms: %i[mingw mswin x64_mingw jruby]
 
 group :development, :test do

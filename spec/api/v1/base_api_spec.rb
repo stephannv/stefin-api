@@ -14,14 +14,20 @@ RSpec.describe Stefin::V1::BaseAPI do
   describe 'Mounted apps' do
     let(:base_routes) { described_class.routes.map(&:path) }
 
+    it 'mounts Stefin::V1::AccountsAPI app' do
+      Stefin::V1::AccountsAPI.routes.each do |route|
+        expect(base_routes).to include(route.path)
+      end
+    end
+
     it 'mounts Stefin::V1::CurrenciesAPI app' do
       Stefin::V1::CurrenciesAPI.routes.each do |route|
         expect(base_routes).to include(route.path)
       end
     end
 
-    it 'mounts Stefin::V1::AccountsAPI app' do
-      Stefin::V1::AccountsAPI.routes.each do |route|
+    it 'mounts Stefin::V1::RecordsAPI app' do
+      Stefin::V1::RecordsAPI.routes.each do |route|
         expect(base_routes).to include(route.path)
       end
     end
@@ -32,6 +38,46 @@ RSpec.describe Stefin::V1::BaseAPI do
 
     def app
       subject
+    end
+
+    context 'when ActiveRecord::RecordInvalid is raised' do
+      before do
+        subject.get '/example' do
+          account = Account.new
+          account.errors.add(:name, 'some error')
+          raise ActiveRecord::RecordInvalid, account
+        end
+      end
+
+      it 'formats params errors as json' do
+        get '/v1/example'
+        expect(response.body).to eq({ errors: { name: ['some error'] } }.to_json)
+      end
+
+      it 'responds with 422 http code' do
+        get '/v1/example'
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+
+    context 'when ActiveRecord::RecordNotDestroyed is raised' do
+      before do
+        subject.get '/example' do
+          account = Account.new
+          account.errors.add(:base, 'some error')
+          raise ActiveRecord::RecordNotDestroyed.new('message', account)
+        end
+      end
+
+      it 'formats params errors as json' do
+        get '/v1/example'
+        expect(response.body).to eq({ errors: { base: ['some error'] } }.to_json)
+      end
+
+      it 'responds with 409 http code' do
+        get '/v1/example'
+        expect(response).to have_http_status(:conflict)
+      end
     end
 
     context 'when Grape::Exceptions::ValidationErrors is raised' do
@@ -81,14 +127,32 @@ RSpec.describe Stefin::V1::BaseAPI do
         end
       end
 
-      it 'format error as json' do
-        get '/v1/example'
-        expect(response.body).to eq({ error: 'Internal server error' }.to_json)
+      context 'when environment isn`t development' do
+        it 'format error as json' do
+          get '/v1/example'
+          expect(response.body).to eq({ error: 'Internal server error' }.to_json)
+        end
+
+        it 'responds with 500 http code' do
+          get '/v1/example'
+          expect(response).to have_http_status(:server_error)
+        end
       end
 
-      it 'responds with 500 http code' do
-        get '/v1/example'
-        expect(response).to have_http_status(:server_error)
+      context 'when environment is development' do
+        it 'raises error' do
+          Rails.env = 'development'
+          expect { get '/v1/example' }.to raise_error(RuntimeError)
+          Rails.env = 'test'
+        end
+      end
+
+      context 'when environemnt is production' do
+        it 'doesn`t raise error' do
+          Rails.env = 'production'
+          expect { get '/v1/example' }.to_not raise_error
+          Rails.env = 'test'
+        end
       end
     end
   end

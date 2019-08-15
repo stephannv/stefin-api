@@ -10,26 +10,21 @@ module Stefin
       # GET /v1/accounts
       desc 'List accounts'
       get '/accounts' do
-        result = ::RetrieveAccounts.call
+        accounts = ::ListAccounts.run!
 
-        raise result.message if result.failure?
-
-        present :accounts, result.accounts, with: ::V1::AccountEntity
+        present :accounts, accounts, with: ::V1::AccountEntity
       end
 
       # GET /v1/accounts/:id
       desc 'Show account details'
-
       params do
         requires :id, type: String
       end
 
       get '/accounts/:id' do
-        result = ::RetrieveAccount.call(account_id: params[:id])
+        account = ::FindAccount.run!(id: params[:id])
 
-        raise result.message if result.failure?
-
-        present :account, result.account, with: ::V1::AccountEntity, type: :detailed
+        present :account, account, with: ::V1::AccountEntity, type: :detailed
       end
 
       # POST /v1/accounts
@@ -43,18 +38,13 @@ module Stefin
       end
 
       post '/accounts' do
-        result = ::CreateAccount.call(account_attributes: account_params)
+        account = ::CreateAccount.run!(account_attributes: account_params)
 
-        if result.success?
-          present :account, result.account, with: ::V1::AccountEntity
-        else
-          error!({ errors: result.account.errors.messages }, :unprocessable_entity)
-        end
+        present :account, account, with: ::V1::AccountEntity
       end
 
       # PUT /v1/accounts/:id
       desc 'Update an account'
-
       params do
         requires :id, type: String
         requires :account, type: Hash do
@@ -65,30 +55,20 @@ module Stefin
       end
 
       patch '/accounts/:id' do
-        result = ::UpdateAccount.call(account_id: params[:id], account_attributes: account_params)
+        account = ::UpdateAccount.run!(account_id: params[:id], account_attributes: account_params)
 
-        if result.success?
-          present :account, result.account, with: ::V1::AccountEntity
-        else
-          error!({ errors: result.account.errors.messages }, :unprocessable_entity)
-        end
+        present :account, account, with: ::V1::AccountEntity
       end
 
       # DELETE /v1/accounts/:id
       desc 'Destroy an account'
-
       params do
         requires :id, type: String
       end
 
       delete '/accounts/:id' do
-        result = ::EraseAccount.call(account_id: params[:id])
-
-        if result.success?
-          status :no_content
-        else
-          error!({ errors: result.account.errors.messages }, :conflict)
-        end
+        ::EraseAccount.run!(account_id: params[:id])
+        status :no_content
       end
     end
   end

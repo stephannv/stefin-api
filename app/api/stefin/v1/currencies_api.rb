@@ -4,11 +4,9 @@ module Stefin
       # GET /v1/currencies
       desc 'List currencies'
       get '/currencies' do
-        result = ::RetrieveCurrencies.call
+        currencies = ::ListCurrencies.run!
 
-        raise result.message if result.failure?
-
-        present :currencies, result.currencies, with: ::V1::CurrencyEntity
+        present :currencies, currencies, with: ::V1::CurrencyEntity
       end
     end
   end
