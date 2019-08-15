@@ -40,7 +40,8 @@ RSpec.describe Stefin::V1::RecordsAPI do
         group: record.group,
         amount: record.amount.to_d,
         occurred_at: record.occurred_at,
-        account_id: record.account_id
+        account_id: record.account_id,
+        subcategory_id: record.subcategory_id
       }
     end
 

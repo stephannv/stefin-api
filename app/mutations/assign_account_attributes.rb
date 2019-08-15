@@ -4,7 +4,7 @@ class AssignAccountAttributes < Mutations::Command
     hash :attributes do
       optional do
         string :name, max_length: 255
-        string :color, matches: /\A#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})\z/
+        string :color, matches: Utils::Color::HEX_COLOR_REGEX
         model :balance, class: 'Money'
         float :balance_cents
         string :balance_currency

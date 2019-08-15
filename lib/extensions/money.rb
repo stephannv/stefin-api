@@ -1,5 +1,5 @@
 module Extensions
-  module MoneyExtension
+  module Money
     def formatted
       format(symbol: currency.to_s + ' ').strip
     end

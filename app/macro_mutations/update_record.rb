@@ -7,7 +7,7 @@ class UpdateRecord < Mutations::Command
         string :group, in: Record.groups.keys
         time :occurred_at
         model :amount, class: 'BigDecimal'
-
+        string :subcategory_id
         string :title, discard_empty: true
         string :description, discard_empty: true
       end

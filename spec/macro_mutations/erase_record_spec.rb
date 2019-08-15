@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe EraseRecord, type: :mutation do
+RSpec.describe EraseRecord, type: :macro_mutation do
   describe '#execute' do
     let(:record) { create(:record) }
 

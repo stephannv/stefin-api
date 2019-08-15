@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CreateAccount, type: :mutation do
+RSpec.describe CreateAccount, type: :macro_mutation do
   describe '#execute' do
     let(:account_attributes) { attributes_for(:account) }
     let(:account) { described_class.run!(account_attributes: account_attributes) }

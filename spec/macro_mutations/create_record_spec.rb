@@ -1,15 +1,16 @@
 require 'rails_helper'
 
-RSpec.describe CreateRecord, type: :mutation do
+RSpec.describe CreateRecord, type: :macro_mutation do
   describe '#execute' do
     let!(:account) { create(:account) }
-    let(:record) { build(:record, account: account) }
+    let(:record) { build(:record, account: account, subcategory: create(:subcategory)) }
     let(:record_attributes) do
       {
         group: record.group,
         occurred_at: record.occurred_at,
         account_id: account.id,
-        amount: record.amount.to_d
+        amount: record.amount.to_d,
+        subcategory_id: record.subcategory.id
       }
     end
     let(:created_record) { described_class.run!(record_attributes: record_attributes) }
@@ -20,6 +21,7 @@ RSpec.describe CreateRecord, type: :mutation do
       expect(created_record.occurred_at).to eq record_attributes[:occurred_at]
       expect(created_record.account_id).to eq record_attributes[:account_id]
       expect(created_record.amount.to_d).to eq record_attributes[:amount]
+      expect(created_record.subcategory_id).to eq record_attributes[:subcategory_id]
     end
 
     it 'updates account balance' do

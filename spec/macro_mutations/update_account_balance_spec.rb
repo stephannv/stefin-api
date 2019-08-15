@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UpdateAccountBalance, type: :mutation do
+RSpec.describe UpdateAccountBalance, type: :macro_mutation do
   describe '#execute' do
     let(:account) { create(:account) }
     let!(:record) { create(:record, account: account) }

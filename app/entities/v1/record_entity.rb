@@ -5,8 +5,8 @@ module V1
     expose :group
     expose :title
     expose :description
-    expose :account, using: AccountEntity
-
+    expose :account, using: 'V1::AccountEntity'
+    expose :subcategory, using: 'V1::SubcategoryEntity'
     expose :amount do |record|
       record.amount.to_d.to_s
     end
