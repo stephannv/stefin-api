@@ -1,4 +1,6 @@
 class Account < ApplicationRecord
+  has_many :records, dependent: :restrict_with_error
+
   monetize :balance_cents
 
   validates :name, presence: true

@@ -4,15 +4,25 @@ RSpec.describe Account, type: :model do
   describe 'Columns' do
     it { is_expected.to have_db_column(:name).of_type(:citext).with_options(null: false) }
     it { is_expected.to have_db_column(:color).of_type(:string).with_options(null: false) }
-    it { is_expected.to have_db_column(:balance_cents).of_type(:integer).with_options(default: 0, null: false) }
+
+    it do
+      is_expected.to have_db_column(:balance_cents)
+        .of_type(:integer)
+        .with_options(default: 0, null: false, limit: 8)
+    end
+
     it { is_expected.to have_db_column(:balance_currency).of_type(:string).with_options(null: false) }
   end
 
-  describe 'Index' do
+  describe 'Indexes' do
     it { is_expected.to have_db_index(:name).unique(true) }
   end
 
-  describe 'Configuration' do
+  describe 'Relations' do
+    it { is_expected.to have_many(:records).dependent(:restrict_with_error) }
+  end
+
+  describe 'Configurations' do
     it { is_expected.to monetize(:balance) }
   end
 

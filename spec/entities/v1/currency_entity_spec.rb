@@ -6,7 +6,11 @@ RSpec.describe V1::CurrencyEntity, type: :entity do
 
   describe 'Exposures' do
     it 'exposes code' do
-      expect(serializable_hash[:code]).to eq resource.code
+      expect(serializable_hash[:code]).to eq resource.iso_code
+    end
+
+    it 'exposes symbol' do
+      expect(serializable_hash[:symbol]).to eq resource.code
     end
 
     it 'exposes name' do
