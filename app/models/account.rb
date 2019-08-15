@@ -1,5 +1,5 @@
 class Account < ApplicationRecord
-  has_many :records, dependent: :restrict_with_error
+  has_many :records, dependent: :destroy
 
   monetize :balance_cents
 
@@ -12,5 +12,5 @@ class Account < ApplicationRecord
 
   validates :name, length: { maximum: 255 }
 
-  validates :color, format: { with: /\A#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})\z/ }
+  validates :color, format: { with: Utils::Color::HEX_COLOR_REGEX }
 end

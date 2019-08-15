@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :record do
     account
+    subcategory
     amount { Monetize.parse(Faker::Number.decimal(l_digits: 3)) }
     occurred_at { Faker::Date.between(from: 1.month.ago, to: Time.zone.today) }
     group { Record.groups.values.sample }

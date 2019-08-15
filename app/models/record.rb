@@ -1,5 +1,6 @@
 class Record < ApplicationRecord
   belongs_to :account
+  belongs_to :subcategory
 
   as_enum :group, { expense: -1, income: 1 }, source: :group_modifier
 

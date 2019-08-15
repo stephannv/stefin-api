@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UpdateRecord, type: :mutation do
+RSpec.describe UpdateRecord, type: :macro_mutation do
   describe '#execute' do
     let(:record) { create(:record) }
     let(:new_amount) { Faker::Number.decimal(l_digits: 3).to_d(2) }

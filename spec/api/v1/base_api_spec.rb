@@ -20,6 +20,12 @@ RSpec.describe Stefin::V1::BaseAPI do
       end
     end
 
+    it 'mounts Stefin::V1::CategoriesAPI app' do
+      Stefin::V1::CategoriesAPI.routes.each do |route|
+        expect(base_routes).to include(route.path)
+      end
+    end
+
     it 'mounts Stefin::V1::CurrenciesAPI app' do
       Stefin::V1::CurrenciesAPI.routes.each do |route|
         expect(base_routes).to include(route.path)
@@ -28,6 +34,12 @@ RSpec.describe Stefin::V1::BaseAPI do
 
     it 'mounts Stefin::V1::RecordsAPI app' do
       Stefin::V1::RecordsAPI.routes.each do |route|
+        expect(base_routes).to include(route.path)
+      end
+    end
+
+    it 'mounts Stefin::V1::SubcategoriesAPI app' do
+      Stefin::V1::SubcategoriesAPI.routes.each do |route|
         expect(base_routes).to include(route.path)
       end
     end

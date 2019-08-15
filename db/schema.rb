@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_05_125805) do
+ActiveRecord::Schema.define(version: 2019_08_15_164336) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -28,6 +28,15 @@ ActiveRecord::Schema.define(version: 2019_08_05_125805) do
     t.index ["name"], name: "index_accounts_on_name", unique: true
   end
 
+  create_table "categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.citext "name", null: false
+    t.string "icon", limit: 32
+    t.string "color", limit: 7, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_categories_on_name", unique: true
+  end
+
   create_table "records", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "account_id", null: false
     t.bigint "amount_cents", default: 0, null: false
@@ -38,10 +47,24 @@ ActiveRecord::Schema.define(version: 2019_08_05_125805) do
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.uuid "subcategory_id", null: false
     t.index ["account_id"], name: "index_records_on_account_id"
     t.index ["group_modifier"], name: "index_records_on_group_modifier"
     t.index ["occurred_at"], name: "index_records_on_occurred_at"
+    t.index ["subcategory_id"], name: "index_records_on_subcategory_id"
+  end
+
+  create_table "subcategories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "category_id", null: false
+    t.citext "name", null: false
+    t.string "icon", limit: 32
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id", "name"], name: "index_subcategories_on_category_id_and_name", unique: true
+    t.index ["category_id"], name: "index_subcategories_on_category_id"
   end
 
   add_foreign_key "records", "accounts"
+  add_foreign_key "records", "subcategories"
+  add_foreign_key "subcategories", "categories"
 end

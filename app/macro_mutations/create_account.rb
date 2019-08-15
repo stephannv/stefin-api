@@ -1,24 +1,23 @@
-class UpdateAccount < Mutations::Command
+class CreateAccount < Mutations::Command
   required do
-    string :account_id
-
     hash :account_attributes do
-      optional do
+      required do
         string :name
-        string :color, matches: /\A#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})\z/
+        string :color, matches: Utils::Color::HEX_COLOR_REGEX
+        string :balance_currency, in: Money::Currency.to_a.map(&:iso_code)
       end
     end
   end
 
   def execute
-    find_account
+    build_new_account
     assign_account_attributes
     save_account
     @account
   end
 
-  private def find_account
-    @account = FindAccount.run!(id: account_id)
+  private def build_new_account
+    @account = BuildNewAccount.run!
   end
 
   private def assign_account_attributes

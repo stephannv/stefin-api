@@ -10,13 +10,5 @@ RSpec.describe DestroyAccount, type: :mutation do
         expect(account).to be_destroyed
       end
     end
-
-    context 'when account can`t be destroyed' do
-      let(:account) { create(:account, :with_records) }
-
-      it 'raises ActiveRecord::RecordNotDestroyed error' do
-        expect { described_class.run!(account: account) }.to raise_error(ActiveRecord::RecordNotDestroyed)
-      end
-    end
   end
 end

@@ -33,9 +33,9 @@ module Stefin
         requires :record, type: Hash do
           requires :group, type: Symbol, values: %i[expense income]
           requires :account_id, type: String
+          requires :subcategory_id, type: String
           requires :occurred_at, type: DateTime
           requires :amount, type: BigDecimal
-
           optional :title, type: String
           optional :description, type: String
         end
@@ -48,16 +48,17 @@ module Stefin
       end
 
       # PUT /v1/records/:id
-      desc 'Update an record'
+      desc 'Update a record'
       params do
         requires :id, type: String
         requires :record, type: Hash do
           optional :group, type: Symbol, values: %i[expense income]
+          optional :subcategory_id, type: String
           optional :occurred_at, type: DateTime
           optional :amount, type: BigDecimal
           optional :title, type: String
           optional :description, type: String
-          at_least_one_of :group, :occurred_at, :amount, :title, :description
+          at_least_one_of :group, :subcategory_id, :occurred_at, :amount, :title, :description
         end
       end
 
@@ -68,7 +69,7 @@ module Stefin
       end
 
       # DELETE /v1/records/:id
-      desc 'Destroy an record'
+      desc 'Destroy a record'
       params do
         requires :id, type: String
       end

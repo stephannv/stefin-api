@@ -27,8 +27,10 @@ module Stefin
       end
 
       mount AccountsAPI
+      mount CategoriesAPI
       mount CurrenciesAPI
       mount RecordsAPI
+      mount SubcategoriesAPI
     end
   end
 end

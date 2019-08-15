@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UpdateAccount, type: :mutation do
+RSpec.describe UpdateAccount, type: :macro_mutation do
   describe '#execute' do
     let(:account) { create(:account) }
     let(:new_name) { Faker::Lorem.word }

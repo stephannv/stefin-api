@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe EraseAccount, type: :mutation do
+RSpec.describe EraseAccount, type: :macro_mutation do
   describe '#execute' do
     let(:account) { create(:account) }
 

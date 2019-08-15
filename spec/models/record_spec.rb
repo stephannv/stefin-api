@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Record, type: :model do
   describe 'Columns' do
     it { is_expected.to have_db_column(:account_id).of_type(:uuid).with_options(null: false) }
+    it { is_expected.to have_db_column(:subcategory_id).of_type(:uuid).with_options(null: false) }
     it { is_expected.to have_db_column(:title).of_type(:string).with_options(limit: 255) }
     it { is_expected.to have_db_column(:description).of_type(:text) }
     it { is_expected.to have_db_column(:occurred_at).of_type(:datetime).with_options(null: false) }
@@ -17,12 +18,14 @@ RSpec.describe Record, type: :model do
 
   describe 'Indexes' do
     it { is_expected.to have_db_index(:account_id) }
+    it { is_expected.to have_db_index(:subcategory_id) }
     it { is_expected.to have_db_index(:occurred_at) }
     it { is_expected.to have_db_index(:group_modifier) }
   end
 
   describe 'Relations' do
     it { is_expected.to belong_to(:account) }
+    it { is_expected.to belong_to(:subcategory) }
   end
 
   describe 'Configurations' do

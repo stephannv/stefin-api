@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Extensions::MoneyExtension, type: :extensions do
+RSpec.describe Extensions::Money, type: :extensions do
   describe '#formatted' do
     it 'concatenates currency code and value' do
       money = Money.new(1000, 'BRL')

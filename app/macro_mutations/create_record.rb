@@ -4,6 +4,7 @@ class CreateRecord < Mutations::Command
       required do
         string :group, in: Record.groups.keys
         string :account_id
+        string :subcategory_id
         time :occurred_at
         model :amount, class: 'BigDecimal'
       end
