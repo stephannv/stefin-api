@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Stefin::V1::BaseAPI do
+RSpec.describe Stefin::V1::BaseAPI, type: :api do
   describe 'Configuration' do
     it 'has json format' do
       expect(described_class.format).to eq :json
@@ -16,6 +16,12 @@ RSpec.describe Stefin::V1::BaseAPI do
 
     it 'mounts Stefin::V1::AccountsAPI app' do
       Stefin::V1::AccountsAPI.routes.each do |route|
+        expect(base_routes).to include(route.path)
+      end
+    end
+
+    it 'mounts Stefin::V1::AuthenticationsAPI app' do
+      Stefin::V1::AuthenticationsAPI.routes.each do |route|
         expect(base_routes).to include(route.path)
       end
     end
@@ -43,9 +49,17 @@ RSpec.describe Stefin::V1::BaseAPI do
         expect(base_routes).to include(route.path)
       end
     end
+
+    it 'mounts Stefin::V1::UsersAPI app' do
+      Stefin::V1::SubcategoriesAPI.routes.each do |route|
+        expect(base_routes).to include(route.path)
+      end
+    end
   end
 
   describe 'Rescued errors' do
+    mock_authenticate_request
+
     subject { Class.new(Stefin::V1::BaseAPI) }
 
     def app

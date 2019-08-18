@@ -4,7 +4,7 @@ module V1
     expose :name
     expose :color
     expose :icon
-    expose :subcategories, if: { type: :detailed } do |category, _options|
+    expose :subcategories, if: { type: :detailed } do |category|
       V1::SubcategoryEntity.represent category.subcategories, except: [:category]
     end
   end

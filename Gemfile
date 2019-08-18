@@ -3,9 +3,11 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.3'
 
+gem 'bcrypt'
 gem 'bootsnap', '1.4.4', require: false
 gem 'grape', '1.2.4'
 gem 'grape-entity', '0.7.1'
+gem 'jwt', '2.2.1'
 gem 'money-rails', '1.13.2'
 gem 'mutations', '0.9.0'
 gem 'pg', '1.1.4'

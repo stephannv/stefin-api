@@ -1,6 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe Stefin::V1::CategoriesAPI do
+RSpec.describe Stefin::V1::CategoriesAPI, type: :api do
+  mock_authenticate_request
+
+  include_examples 'authenticate routes'
+
   describe 'GET /v1/categories' do
     let(:category) { build(:category, :with_id) }
 

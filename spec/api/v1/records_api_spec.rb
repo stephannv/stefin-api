@@ -1,6 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe Stefin::V1::RecordsAPI do
+RSpec.describe Stefin::V1::RecordsAPI, type: :api do
+  mock_authenticate_request
+
+  include_examples 'authenticate routes'
+
   describe 'GET /v1/records' do
     let(:record) { build(:record, :with_id) }
 

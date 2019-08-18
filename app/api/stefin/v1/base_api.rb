@@ -3,6 +3,8 @@ module Stefin
     class BaseAPI < Grape::API
       version :v1, using: :path
 
+      helpers Helpers::AuthenticationHelper
+
       rescue_from ActiveRecord::RecordInvalid do |e|
         error!({ errors: e.record.errors.messages }, 422)
       end
@@ -26,11 +28,17 @@ module Stefin
         error!({ error: 'Internal server error' }, 500)
       end
 
+      before do
+        authenticate_request! unless public_route?
+      end
+
       mount AccountsAPI
+      mount AuthenticationsAPI
       mount CategoriesAPI
       mount CurrenciesAPI
       mount RecordsAPI
       mount SubcategoriesAPI
+      mount UsersAPI
     end
   end
 end

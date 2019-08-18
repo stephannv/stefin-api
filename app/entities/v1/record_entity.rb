@@ -7,14 +7,8 @@ module V1
     expose :description
     expose :account, using: 'V1::AccountEntity'
     expose :subcategory, using: 'V1::SubcategoryEntity'
-    expose :amount do |record|
-      record.amount.to_d.to_s
-    end
-
+    expose(:amount) { |record| record.amount.to_d.to_s }
     expose :amount_currency
-
-    expose :formatted_amount do |record|
-      record.amount.formatted
-    end
+    expose(:formatted_amount) { |record| record.amount.formatted }
   end
 end

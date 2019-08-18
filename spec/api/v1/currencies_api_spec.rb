@@ -1,6 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe Stefin::V1::CurrenciesAPI do
+RSpec.describe Stefin::V1::CurrenciesAPI, type: :api do
+  mock_authenticate_request
+
+  include_examples 'authenticate routes'
+
   describe 'GET /v1/currencies' do
     let(:currency) { Money::Currency.first }
 
